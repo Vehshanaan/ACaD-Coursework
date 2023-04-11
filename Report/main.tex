@@ -86,13 +86,49 @@ Theoretical transfer function of the plant:
 \begin{equation}
     \frac{Y(s)}{U(s)} = g_{p}(s) = \frac{1}{s^{2}+0.6s+4}
 \end{equation}
-
-
 \textbf{Answer:}
 % https://electronics.stackexchange.com/questions/152159/deriving-2nd-order-passive-low-pass-filter-cutoff-frequency
 \vspace{0.5cm}
 
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.6\linewidth]{Report/pics/RLC电路例子.png}
+    \caption{Example of RLC circuit.}
+    \label{fig:RLC circuit example}
+\end{figure}
+
 A common example which has the given transfer function is a RLC circuit.
+
+As shown in Fig. \ref{fig:RLC circuit example}, the voltage across the capacitor C1 exhibits dynamic characteristics similar to the given transfer function. Explains are as follows:
+
+\vspace{0.2cm}
+Voltage equation of the entire circuit in time domain:
+\begin{equation}
+    V_1 = U_R+U_L+U_C = R\times I+L\times \frac{dI}{dt}+\frac{1}{C}\int_0^t Idt
+    \label{equ:VoltageInTimeDomain}
+\end{equation}
+
+Apply Laplacian transform on equation (\ref{equ:VoltageInTimeDomain}), and we have:
+\begin{equation}
+        V_1(s) = RI(s)+ LI(s)s+\frac{I(s)}{Cs}
+        \label{equ:VoltageInSDomain}
+\end{equation}
+
+And from equation (\ref{equ:VoltageInSDomain}), the relation of voltage across the capacitor and the source is:
+\begin{equation}
+    \frac{U_C}{V_1}=\frac{1}{LCs^2+CRs+1}
+\end{equation}
+
+Which have similar dynamic with the theoretical plant provided.
+
+
+
+
+
+
+
+
 
 
 
