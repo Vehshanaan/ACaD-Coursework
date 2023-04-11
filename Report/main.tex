@@ -91,14 +91,28 @@ Theoretical transfer function of the plant:
 \vspace{0.5cm}
 
 
-\begin{figure}
+\begin{figure}[htbp]
+  \begin{minipage}[t]{0.5\textwidth}
     \centering
-    \includegraphics[width = 0.6\linewidth]{Report/pics/RLC电路例子.png}
-    \caption{Example of RLC circuit.}
+    \includegraphics[width=\linewidth]{Report/pics/RLC电路例子.png}
+    \caption{Example of RLC circuit. 
+    \centering
+    \begin{Large}
+    $\frac{U_c}{V_1} = \frac{4}{s^2+0.6s+4}$.
+    \end{Large}
+    }
     \label{fig:RLC circuit example}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Report/pics/RLCStepResponse.png}
+    \caption{Simulated step response of voltage across capacitor C1. }
+    \label{fig:Uc step response}
+  \end{minipage}
 \end{figure}
 
-A common example which has the given transfer function is a RLC circuit.
+A common example which has similar dynamic with the given transfer function is a RLC circuit.
 
 As shown in Fig. \ref{fig:RLC circuit example}, the voltage across the capacitor C1 exhibits dynamic characteristics similar to the given transfer function. Explains are as follows:
 
@@ -117,24 +131,22 @@ Apply Laplacian transform on equation (\ref{equ:VoltageInTimeDomain}), and we ha
 
 And from equation (\ref{equ:VoltageInSDomain}), the relation of voltage across the capacitor and the source is:
 \begin{equation}
-    \frac{U_C}{V_1}=\frac{1}{LCs^2+CRs+1}
+    \frac{U_C(s)}{V_1(s)}=\frac{1}{LCs^2+CRs+1}
 \end{equation}
 
-Which have similar dynamic with the theoretical plant provided.
+Which have similar dynamic with the theoretical plant provided. The simulated step response of voltage across capacitor C1 is shown in Fig. \ref{fig:Uc step response}.
 
-
-
-
-
-
-
-
-
-
-
-
+\pagebreak
 
 \section{Control System Block Diagrams}
+\textbf{Question:}
+\begin{quote}
+    Draw two equivalent control system block diagrams, which features the output feedback and the state feedback respectively. Compare the similarity and difference. 
+\end{quote}
+\textbf{Answer:}
+
+1
+
 \section{Plant Analyse}
 \section{State Feedback Controller Design}
 \section{Observer Design}
