@@ -147,17 +147,34 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
 
 \begin{figure}
     \centering
-    \includegraphics[width = \linewidth]{Report/pics/OutputFeedbackDiagram.png}
-    \caption{Caption}
+    \includegraphics[height = 0.07\paperheight]{Report/pics/OutputFeedbackDiagram.png}
+    \caption{Output feedback control diagram.}
     \label{fig:my_label}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width = \linewidth]{Report/pics/StateFeedbackDiagram.png}
-    \caption{Caption}
+    \includegraphics[height = 0.1\paperheight]{Report/pics/StateFeedbackDiagram.png}
+    \caption{State feedback control diagram.}
     \label{fig:my_label}
 \end{figure}
+
+
+\textbf{Similarity}
+\begin{itemize}
+    \item Both methods are used to modify the performance of the system to achieve the desired outcome.
+    \item Both methods are close loop control and using feedback to accomplish the objective of control.
+    \item Both require the mathematical model of the system.
+    \item Both methods using linear controlling techniques like poles placing, etc.
+\end{itemize}
+
+\textbf{Difference}
+\begin{itemize}
+    \item State feedback cannot apply to systems whose states are not observable, while the output feedback requires the output only.
+    \item The core idea is different: output feedback aims to eliminate/minimize errors, but state feedback is about changing the plant characteristics and creating an ideal system which including the plant as a subsystem.
+    \item Output feedback is more suitable for systems that are uncertain and have disturbance.
+    \item State feedback is more suitable for systems that are fully examined and have less disturbance.
+\end{itemize}
 
 
 \section{Plant Analyse}
