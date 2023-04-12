@@ -176,8 +176,54 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
     \item State feedback is more suitable for systems that are fully examined and have less disturbance.
 \end{itemize}
 
+\pagebreak
+
 
 \section{Plant Analyse}
+
+\textbf{Question:}
+
+\begin{quote}    
+Analyse the plant performance such stability, observability, controllability, and time response to a unit step reference input.
+\end{quote}
+\textbf{Answer:}
+\begin{itemize}
+    \item \textbf{Stability:}
+    Poles of the plant are: $-0.3000\pm1.9774i$, both of them are on the left-half of the s-plane, which means that the system is stable.
+    \item \textbf{Observability and controllability:} For linear time-invariant systems, controllability and observability are equivalent in continuous time. The following verification is using the observable realisation:
+
+    \begin{equation}
+        \begin{cases}
+        \left[\begin{array}{ccc}\dot{x_1}(t)\\
+        \dot{x_{2}}(t)\end{array}\right]
+        =
+        \left[\begin{array}{ccc} 0&-4\\
+        1&-0.6\end{array}\right]
+        \left[\begin{array}{ccc}x_1(t)\\
+        x_2(t)\end{array}\right]
+        +
+        \left[\begin{array}{ccc}1\\
+        0\end{array}\right]
+        u(t)
+        \\
+        \\
+        y(t)=
+        \left[\begin{array}{ccc}1&0\end{array}\right]
+        \left[\begin{array}{ccc}x_1(t)\\
+        x_2(t)\end{array}\right]
+        \end{cases}
+    \end{equation}
+
+    For the realisation above, the criterion matrices P, Q and R are:
+    $P = \left[\begin{array}{ccc}1&0\\
+        0&1\end{array}\right]$, $Q = \left[\begin{array}{ccc}0&1\end{array}\right]$, $R=\left[\begin{array}{ccc}0&1\\
+        1&-0.6\end{array}\right]$. It's controllable ($rank(P)=2=n, rank(Q)=1=l$) and observable ($rank(R)=2=n$).
+    
+    \item \textbf{Unit step response:}
+    
+    \item \textbf{Other Metrics:}    
+\end{itemize}
+
 \section{State Feedback Controller Design}
 \section{Observer Design}
 \section{Performance Simulation}
