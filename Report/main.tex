@@ -22,6 +22,8 @@
 \usepackage{csquotes}
 \usepackage{placeins}
 \usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage{IEEEtrantools}
 
 \begin{document}
@@ -218,11 +220,28 @@ Analyse the plant performance such stability, observability, controllability, an
     $P = \left[\begin{array}{ccc}1&0\\
         0&1\end{array}\right]$, $Q = \left[\begin{array}{ccc}0&1\end{array}\right]$, $R=\left[\begin{array}{ccc}0&1\\
         1&-0.6\end{array}\right]$. It's controllable ($rank(P)=2=n, rank(Q)=1=l$) and observable ($rank(R)=2=n$).
+
     
-    \item \textbf{Unit step response:}
-    
-    \item \textbf{Other Metrics:}    
+    \item \textbf{Unit step response:} The unit step response in time domain is as shown in Fig. \ref{fig:UnitStepResponse}. This plant has a slow response speed and steady-state error.
+\FloatBarrier
+        \begin{figure}
+            \centering
+            \includegraphics[height = 0.25\textheight]{Report/pics/PlantStepResponse.png}
+            \caption{Caption}
+            \label{fig:UnitStepResponse}
+        \end{figure}
+
+    \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
+        \begin{itemize}
+            \item 1
+            \item 1
+            \item 1
+            \item 1
+        \end{itemize}
 \end{itemize}
+
+\FloatBarrier
+\pagebreak
 
 \section{State Feedback Controller Design}
 \section{Observer Design}
