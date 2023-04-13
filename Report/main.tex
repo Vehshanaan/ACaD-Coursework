@@ -24,6 +24,8 @@
 \usepackage{etoolbox}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{subcaption}
 \usepackage{IEEEtrantools}
 
 \begin{document}
@@ -174,11 +176,11 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
 \begin{itemize}
     \item State feedback cannot apply to systems whose states are not observable, while the output feedback requires the output only.
     \item The core idea is different: output feedback aims to eliminate/minimize errors, but state feedback is about changing the plant characteristics and creating an ideal system which including the plant as a subsystem.
+    \item Output feedback is actually a kind of partially state feedback, for output is a combination of the states. But not all states could be found in output, so the freedom of output feedback is lesser than state feedback.
     \item Output feedback is more suitable for systems that are uncertain and have disturbance.
     \item State feedback is more suitable for systems that are fully examined and have less disturbance.
 \end{itemize}
 
-\pagebreak
 
 
 \section{Plant Analyse}
@@ -222,28 +224,59 @@ Analyse the plant performance such stability, observability, controllability, an
         1&-0.6\end{array}\right]$. It's controllable ($rank(P)=2=n, rank(Q)=1=l$) and observable ($rank(R)=2=n$).
 
     
-    \item \textbf{Unit step response:} The unit step response in time domain is as shown in Fig. \ref{fig:UnitStepResponse}. This plant has a slow response speed and steady-state error.
-\FloatBarrier
-        \begin{figure}
-            \centering
-            \includegraphics[height = 0.25\textheight]{Report/pics/PlantStepResponse.png}
-            \caption{Caption}
-            \label{fig:UnitStepResponse}
-        \end{figure}
+    \item \textbf{Unit step response:} The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
 
+
+        \begin{figure}
+          \centering
+          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
+          \quad % or \hfill
+          \subfigure[Simulated step response in MATLAB.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/SimulateStepResponse.png}}
+          \caption{Simulated step responses.}
+        \end{figure}
+    
     \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
         \begin{itemize}
-            \item 1
-            \item 1
-            \item 1
-            \item 1
+            \item Overshoot: 68.4885\%
+            \item Steady-state error: 0.80372
+            \item Rise time: 0.5 s
+            \item Peak time: 1.43 s
+            \item Settling time: 7.73 s (error$\leq$ 5\%)
         \end{itemize}
 \end{itemize}
 
-\FloatBarrier
-\pagebreak
+
 
 \section{State Feedback Controller Design}
+\textbf{Question:}
+\begin{quote}
+Design a state feedback controller (you specify the reasonable design criteria).
+\end{quote}
+\textbf{Answer:}
+
+ \textbf{Damping ratio:} choose the optimal, $\xi=0.707$.
+ 
+ \textbf{Undamped natural frequency:} it depends on the application and the system capability. Take $\omega_{n}=10$ in this report.
+
+ \textbf{Closed loop denominator}: $s^2+2\xi\omega_{n}s+\omega_{n}^2 \rightarrow s^2+14.14s+100$.
+
+ From the closed loop denominator and steady state final value, we have:
+ \begin{equation}
+     \begin{cases}
+         F_s = \left[\begin{array}{ccc}-13.54&-87.876\end{array}\right]\\
+         H=100
+     \end{cases}
+ \end{equation}
+
+And the closed loop state feedback controller is as shown below:
+
+ \begin{figure}
+     \centering
+     \includegraphics{}
+     \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
 \section{Observer Design}
 \section{Performance Simulation}
 \section{Digital Controller Implementation}
