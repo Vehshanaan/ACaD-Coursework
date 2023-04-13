@@ -149,14 +149,14 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
 \end{quote}
 \textbf{Answer:}
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
     \includegraphics[height = 0.07\paperheight]{Report/pics/OutputFeedbackDiagram.png}
     \caption{Output feedback control diagram.}
     \label{fig:my_label}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
     \includegraphics[height = 0.1\paperheight]{Report/pics/StateFeedbackDiagram.png}
     \caption{State feedback control diagram.}
@@ -227,14 +227,14 @@ Analyse the plant performance such stability, observability, controllability, an
     \item \textbf{Unit step response:} The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
 
 
-        \begin{figure}
+        \begin{figure}[htbp]
           \centering
           \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
           \quad % or \hfill
           \subfigure[Simulated step response in MATLAB.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/SimulateStepResponse.png}}
           \caption{Simulated step responses.}
         \end{figure}
-    
+
     \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
         \begin{itemize}
             \item Overshoot: 68.4885\%
@@ -254,30 +254,33 @@ Design a state feedback controller (you specify the reasonable design criteria).
 \end{quote}
 \textbf{Answer:}
 
- \textbf{Damping ratio:} choose the optimal, $\xi=0.707$.
+ \textbf{Damping ratio $\xi$ :} Choose the optimal damping ratio $\xi=0.707$. The optimal damping ratio can minimize the cumulative error and its rate of change.
  
- \textbf{Undamped natural frequency:} it depends on the application and the system capability. Take $\omega_{n}=10$ in this report.
+ \textbf{Undamped natural frequency $\omega_n$:} Assuming we need to achieve a settling time (5\% error) of 0.5 seconds, the natural frequency of oscillation would be: $\omega_n = 0.5\times\frac{\xi}{3}=6\sqrt{2}.$
 
- \textbf{Closed loop denominator}: $s^2+2\xi\omega_{n}s+\omega_{n}^2 \rightarrow s^2+14.14s+100$.
+ \textbf{Closed loop denominator}: $s^2+2\xi\omega_{n}s+\omega_{n}^2 \rightarrow s^2+12s+72$.
 
  From the closed loop denominator and steady state final value, we have:
  \begin{equation}
      \begin{cases}
-         F_s = \left[\begin{array}{ccc}-13.54&-87.876\end{array}\right]\\
+         F_s = \left[\begin{array}{ccc}-\frac{57}{5}&-\frac{1529}{25}\end{array}\right]\approx\left[\begin{array}{ccc}-11.4&-61.16\end{array}\right]\\
          H=100
      \end{cases}
  \end{equation}
 
 And the closed loop state feedback controller is as shown below:
-
- \begin{figure}
+ \begin{figure}[htbp]
      \centering
-     \includegraphics{}
-     \caption{Caption}
-     \label{fig:my_label}
+     \includegraphics[width = 0.7\textwidth]{Report/pics/StateFeedbackControl.png}
+     \caption{Plant with state feedback control.}
+     \label{fig:State Feedback Control}
  \end{figure}
+\FloatBarrier
+ 
 
 \section{Observer Design}
+
+
 \section{Performance Simulation}
 \section{Digital Controller Implementation}
 \section{References}
