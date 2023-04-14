@@ -282,7 +282,7 @@ And the solution to Equation (\ref{equ:StateFeedbackPrinciple}) is:
  \begin{equation}
      \begin{cases}
          F_s = \left[\begin{array}{ccc}-\frac{57}{5}&-\frac{1529}{25}\end{array}\right]\approx\left[\begin{array}{ccc}-11.4&-61.16\end{array}\right]\\
-         H=100
+         H=72
      \end{cases}
  \end{equation}
 
@@ -319,9 +319,9 @@ and:
 
 For the implementation with state observer, please see Section \ref{Performance Simulation}.
 
-\textbf{Applications or situations of use: }
-1111
-
+\textbf{Applications or situations of use:}
+Generally speaking, state observer is a technique of computing state information with the output.
+When the state cannot be directly measured with sensors (like deformation of the building) the observer could be useful for it could derive the state information with only the output. 
 
 \section{Performance Simulation}
 \textbf{Question:}
@@ -329,6 +329,9 @@ For the implementation with state observer, please see Section \ref{Performance 
     Provide relevant performance data and analysis from your simulated studies.
 \end{quote}
 \textbf{Answer:}
+
+The system simulated with simulink is as shown below:
+
 
 \label{Performance Simulation}
 \section{Digital Controller Implementation}
