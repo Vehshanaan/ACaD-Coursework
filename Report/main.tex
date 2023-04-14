@@ -176,7 +176,7 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
 \begin{itemize}
     \item State feedback cannot apply to systems whose states are not observable, while the output feedback requires the output only.
     \item The core idea is different: output feedback aims to eliminate/minimize errors, but state feedback is about changing the plant characteristics and creating an ideal system which including the plant as a subsystem.
-    \item Output feedback is actually a kind of partially state feedback, for output is a combination of the states. But not all states could be found in output, so the freedom of output feedback is lesser than state feedback.
+    \item Output feedback is actually a kind of partially state feedback, for output is a combination of the states. But not all states could be found in output, so the freedom and performance of output feedback is lesser than state feedback.
     \item Output feedback is more suitable for systems that are uncertain and have disturbance.
     \item State feedback is more suitable for systems that are fully examined and have less disturbance.
 \end{itemize}
@@ -184,7 +184,7 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
 
 
 \section{Plant Analyse}
-
+\label{section:plant analyse}
 \textbf{Question:}
 
 \begin{quote}    
@@ -212,7 +212,7 @@ Analyse the plant performance such stability, observability, controllability, an
         \\
         \\
         y(t)=
-        \left[\begin{array}{ccc}1&0\end{array}\right]
+        \left[\begin{array}{ccc}0&1\end{array}\right]
         \left[\begin{array}{ccc}x_1(t)\\
         x_2(t)\end{array}\right]
         \end{cases}
@@ -241,7 +241,7 @@ Analyse the plant performance such stability, observability, controllability, an
             \item Steady-state error: 0.80372
             \item Rise time: 0.5 s
             \item Peak time: 1.43 s
-            \item Settling time: 7.73 s (error$\leq$ 5\%)
+            \item Settling time: 7.73 s (error $\leq$ 5\%)
         \end{itemize}
 \end{itemize}
 
@@ -254,13 +254,31 @@ Design a state feedback controller (you specify the reasonable design criteria).
 \end{quote}
 \textbf{Answer:}
 
- \textbf{Damping ratio $\xi$ :} Choose the optimal damping ratio $\xi=0.707$. The optimal damping ratio can minimize the cumulative error and its rate of change.
+ \textbf{Damping ratio $\xi$ :} Choose the optimal damping ratio $\xi=0.707$. This optimal damping ratio can minimize the cumulative error and its rate of change, but it will cause overshoot for it is in the range of underdamping. Some system may doesn't allow any overshoot, but here in this report we assume the system could tolerate overshoot, for there is no actual system provided. To prevent overshoot from happening, just turn up the damping ratio and make the $\xi \ge 1$.
  
  \textbf{Undamped natural frequency $\omega_n$:} Assuming we need to achieve a settling time (5\% error) of 0.5 seconds, the natural frequency of oscillation would be: $\omega_n = 0.5\times\frac{\xi}{3}=6\sqrt{2}.$
 
  \textbf{Closed loop denominator}: $s^2+2\xi\omega_{n}s+\omega_{n}^2 \rightarrow s^2+12s+72$.
 
+The form of state feedback controller is:
+
+\begin{equation}
+    u(t) = F_{s}x(t)+Hv(t)
+\end{equation}
+
  From the closed loop denominator and steady state final value, we have:
+
+\begin{equation}
+    \begin{cases}
+        \overline{F}_s = A+BF_s\\
+        det\left[sI-\overline{F}_s\right] = s^2+12s+72\\
+        H = \left\{ \left[C+DF_s\right]\left[sI-\overline{F}_s\right]^{-1}B+D \right\}_{s=0}^{-1} = \left\{ \left[C+DF_s\right]\left[\overline{F}_s\right]^{-1}B-D \right\}^{-1}
+    \end{cases}
+    \label{equ:StateFeedbackPrinciple}
+\end{equation}
+
+And the solution to Equation (\ref{equ:StateFeedbackPrinciple}) is:
+ 
  \begin{equation}
      \begin{cases}
          F_s = \left[\begin{array}{ccc}-\frac{57}{5}&-\frac{1529}{25}\end{array}\right]\approx\left[\begin{array}{ccc}-11.4&-61.16\end{array}\right]\\
@@ -268,15 +286,8 @@ Design a state feedback controller (you specify the reasonable design criteria).
      \end{cases}
  \end{equation}
 
-And the closed loop state feedback controller is as shown below:
- \begin{figure}[htbp]
-     \centering
-     \includegraphics[width = \textwidth]{Report/pics/StateFeedbackControl.png}
-     \caption{Plant with state feedback control.}
-     \label{fig:State Feedback Control}
- \end{figure}
-\FloatBarrier
- 
+For the implementation with state observer, please see Section \ref{Performance Simulation}.
+
 
 \section{Observer Design}
 \textbf{Question:}
@@ -285,9 +296,41 @@ Design a corresponding observer and explain when it will be used.
 \end{quote}
 \textbf{Answer:}
 
+\textbf{Observer poles specification:} In general, the response of the state observer should be 2 $\sim$ 5 times faster than the original system, but if the response is too fast, it may amplify small error signals. So the poles of the observer should be closer to the imagine axis than the plant.
+
+According to the plant's poles ($s = -0.3000\pm1.9774i$) previously mentioned in Section \ref{section:plant analyse}, the poles of the observer could be: $s=-0.1, s=-0.12$, which means the characteristic equation for the observer would be: $(s+0.1)(s+0.12)=s^2-0.22s+0.012$.
+
+The form of the state observer is:
+\begin{equation}
+    \dot{\hat{x}}(t) = L\hat{x}(t)+Mu(t)+Ny(t)
+\end{equation}
+
+From the characteristic equation and the request of $e(t) = \hat{x}(t)-Tx(t) \approx 0$ ($T \approx 1$ for observer has negative real poles), we could derive that:
+\begin{equation}
+    N = 
+    \left[\begin{array}{ccc}-3.988\\-0.38\end{array}\right]
+\end{equation}
+
+and:
+\begin{equation}
+    L = A-NC = \left[\begin{array}{ccc}0&-0.012\\1&-0.22\end{array}\right], 
+    M = B-ND = \left[\begin{array}{ccc}1\\0\end{array}\right]
+\end{equation}
+
+For the implementation with state observer, please see Section \ref{Performance Simulation}.
+
+\textbf{Applications or situations of use: }
 1111
 
+
 \section{Performance Simulation}
+\textbf{Question:}
+\begin{quote}
+    Provide relevant performance data and analysis from your simulated studies.
+\end{quote}
+\textbf{Answer:}
+
+\label{Performance Simulation}
 \section{Digital Controller Implementation}
 \section{References}
 
