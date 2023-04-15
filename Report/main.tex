@@ -229,19 +229,19 @@ Analyse the plant performance such stability, observability, controllability, an
 
         \begin{figure}[htbp]
           \centering
-          \subfigure[Simulated step response in Simulink Linearlizer.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
+          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
           \quad % or \hfill
           \subfigure[Simulated step response in MATLAB.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/SimulateStepResponse.png}}
           \caption{Simulated step responses.}
         \end{figure}
 
-    \item \textbf{Other Metrics:}  Other common metrics for second order system step response evaluation:
+    \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
         \begin{itemize}
-            \item Overshoot: 61.7\%
-            \item Final value: 0.25
-            \item Rise time: 0.588 s
-            \item Peak time: 1.54 s
-            \item Transient time: 12.29 s
+            \item Overshoot: 68.4885\%
+            \item Steady-state error: 0.80372
+            \item Rise time: 0.5 s
+            \item Peak time: 1.43 s
+            \item Settling time: 7.73 s (error $\leq$ 5\%)
         \end{itemize}
 \end{itemize}
 
@@ -324,7 +324,6 @@ Generally speaking, state observer is a technique of computing state information
 When the state cannot be directly measured with sensors (like deformation of the building) the observer could be useful for it could derive the state information with only the output. 
 
 \section{Performance Simulation}
-\label{Performance Simulation}
 \textbf{Question:}
 \begin{quote}
     Provide relevant performance data and analysis from your simulated studies.
@@ -334,45 +333,19 @@ When the state cannot be directly measured with sensors (like deformation of the
 The system simulated with simulink is as shown below:
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = \linewidth]{Report/pics/WholeSystem.png}
+    \includegraphics[width = 1.1\linewidth]{Report/pics/WholeSystem.png}
     \caption{Overview of the simulated system.}
-    \label{fig:WholeSystem}
+    \label{fig:my_label}
 \end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.7\linewidth]{Report/pics/Plant.png}
-    \caption{Simulated plant (subsystem in Fig. \ref{fig:WholeSystem})}
-    \label{fig:Plant}
-\end{figure}
-
-        \begin{figure}[htbp]
-          \centering
-          \subfigure[$\hat{x}_1$ from observer and $x_1$ of the plant.\label{fig:Observedx^1}]{\includegraphics[width=0.8\textwidth]{Report/pics/x^1.png}}
-          \hfill%\quad % or \hfill
-          \subfigure[$\hat{x}_2$ from observer and $x_2$ of the plant.\label{fig:Observedx^2} ]{\includegraphics[width=0.8\textwidth]{Report/pics/x^2.png}}
-          \caption{Simulated observer results.}
-        \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width = \linewidth]{Report/pics/OutputResult1.png}
-    \caption{System output and input.}
-    \label{fig:OutputResult1}
+    \includegraphics{}
+    \caption{Caption}
+    \label{fig:my_label}
 \end{figure}
-\FloatBarrier
 
-\textbf{Metrics in time domain:}
-\begin{itemize}
-            \item Overshoot: 68.4885\%
-            \item Steady-state error: 0.80372
-            \item Rise time: 0.588 s
-            \item Peak time: 1.54 s
-            \item Settling time: 7.73 s (error $\leq$ 5\%)
-        \end{itemize}
-\textbf{Metrics in frequency domain:}
-
-\pagebreak
+\label{Performance Simulation}
 \section{Digital Controller Implementation}
 \section{References}
 
