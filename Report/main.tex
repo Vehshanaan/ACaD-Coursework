@@ -357,21 +357,40 @@ The system simulated with simulink is as shown below:
 \begin{figure}
     \centering
     \includegraphics[width = \linewidth]{Report/pics/OutputResult1.png}
-    \caption{System output and input.}
+    \caption{System output and input (unit step response).}
     \label{fig:OutputResult1}
 \end{figure}
 \FloatBarrier
 
 \textbf{Metrics in time domain:}
 \begin{itemize}
-            \item Overshoot: 68.4885\%
-            \item Steady-state error: 0.80372
+            \item Overshoot: 3.900\%
+            \item Steady-state error: 0.000
             \item Rise time: 0.588 s
             \item Peak time: 1.54 s
             \item Settling time: 7.73 s (error $\leq$ 5\%)
         \end{itemize}
 \textbf{Metrics in frequency domain:}
 \section{Digital Controller Implementation}
+\textbf{Question:}
+\begin{quote}
+    Discuss the implementation of computer based digital control system including digital controller algorithm and major hardware components. Indicate how you would choose the sampling time required for the computer control system.
+\end{quote}
+\textbf{Answer:}
+The system primarily requires the following components:
+\begin{itemize}
+    \item \textbf{A/D Converter and D/A Converter:} Convert the system output to digital signal, and convert digital controlling signals to analog values. The choice of A/D, D/A converter model should be mainly based on the actual output range of the system and the required resolution (which is determined by the error requirements).
+    \item \textbf{Sampler/Holder:} Generally, a zero-order hold sampler is sufficient because it is not overly sensitive to noise signals. 
+    
+    The sampling rate could be determined by the plant's dynamic characteristic: sampling interval must be five or ten times faster than the smallest time constant of the system.
+    
+    Poles of the plant are: $s=-0.3000\pm0.19774i$, and the real part of the poles determines the convergence speed of the system. So the time constants are $\frac{1}{0.3000}\approx3.3333$.
+
+    And for sampling interval $T$: $T$ could be selected in the interval of $(0.2\sim0.1)*3.3333$, the faster the better. But the sampling rate is also limited by the other factors from other parts of the system like channel bandwidth, processing speed, power supply, and budget. In this report I will take the middle of the interval as the sampling interval, which is $0.15*3.3333 = 0.5 s$.
+    
+    \item \textbf{Logic Circuits:} The operations of the control system designed in this report can be performed using simple digital circuits, and in some designs, they may be performed by a microcontroller. The selection of devices in this section should be based on budget considerations.
+\end{itemize}
+
 \section{References}
 
 \end{document}
