@@ -229,19 +229,19 @@ Analyse the plant performance such stability, observability, controllability, an
 
         \begin{figure}[htbp]
           \centering
-          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
+          \subfigure[Simulated step response in Simulink Linearlizer.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
           \quad % or \hfill
           \subfigure[Simulated step response in MATLAB.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/SimulateStepResponse.png}}
           \caption{Simulated step responses.}
         \end{figure}
 
-    \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
+    \item \textbf{Other Metrics:}  Other common metrics for second order system step response evaluation:
         \begin{itemize}
             \item Overshoot: 61.7\%
-            \item Steady-state error: 0.75
+            \item Final value: 0.25
             \item Rise time: 0.588 s
-            \item Peak time: 1.43 s
-            \item Settling time: 7.73 s (error $\leq$ 5\%)
+            \item Peak time: 1.54 s
+            \item Transient time: 12.29 s
         \end{itemize}
 \end{itemize}
 
