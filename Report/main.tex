@@ -285,6 +285,7 @@ Design a state feedback controller (you specify the reasonable design criteria).
 \end{quote}
 \textbf{Answer:}
 
+
  \textbf{Damping ratio $\xi$ :} Choose the optimal damping ratio $\xi=0.707$\cite{OptimalDampingRatio}. This optimal damping ratio can minimize the cumulative error and its rate of change, but it will cause overshoot for it is in the range of underdamping. Some system may doesn't allow any overshoot, but here in this report we assume the system could tolerate overshoot, for there is no actual system provided. To prevent overshoot from happening, just turn up the damping ratio and make the $\xi \ge 1$.
  
  \textbf{Undamped natural frequency $\omega_n$:} Assuming we need to achieve a settling time (5\% error) of 0.5 seconds, the natural frequency of oscillation would be: $\omega_n = 0.5\times\frac{\xi}{3}=6\sqrt{2}.$
@@ -327,9 +328,10 @@ Design a corresponding observer and explain when it will be used.
 \end{quote}
 \textbf{Answer:}
 
-\textbf{Observer poles specification:} In general, the response of the state observer should be 2 $\sim$ 5 times faster than the original system\cite{CourseMaterial}, but if the response is too fast, it may amplify small error signals. So the poles of the observer should be closer to the imagine axis than the plant.
 
-According to the plant's poles ($s = -0.3000\pm1.9774i$) previously mentioned in Section \ref{section:plant analyse}, the poles of the observer could be: $s=-0.1, s=-0.12$, which means the characteristic equation for the observer would be: $(s+0.1)(s+0.12)=s^2-0.22s+0.012$.
+\textbf{Observer poles specification:} In general, the response of the state observer should be 2 $\sim$ 5 times faster than the original system\cite{CourseMaterial}, but if the response is too fast, it may amplify small error signals. So the poles of the observer should be further to the imagine axis than the plant.
+
+According to the plant's poles ($s = -0.3000\pm1.9774i$) previously mentioned in Section \ref{section:plant analyse}, the poles of the observer could be: $s=-1.2, s=-1.3$, which means the characteristic equation for the observer would be: $(s+1.2)(s+1.3)=s^2+2.5s+1.56$.
 
 The form of the state observer is:
 \begin{equation}
@@ -339,12 +341,12 @@ The form of the state observer is:
 From the characteristic equation and the request of $e(t) = \hat{x}(t)-Tx(t) \approx 0$ ($T \approx 1$ for observer has negative real poles), we could derive that:
 \begin{equation}
     N = 
-    \left[\begin{array}{ccc}-3.988\\-0.38\end{array}\right]
+    \left[\begin{array}{ccc}-2.44\\1.9\end{array}\right]
 \end{equation}
 
 and:
 \begin{equation}
-    L = A-NC = \left[\begin{array}{ccc}0&-0.012\\1&-0.22\end{array}\right], 
+    L = A-NC = \left[\begin{array}{ccc}0&-1.56\\1&-2.5\end{array}\right], 
     M = B-ND = \left[\begin{array}{ccc}1\\0\end{array}\right]
 \end{equation}
 
@@ -373,7 +375,7 @@ The system simulated with simulink is as shown below:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{Report/pics/Plant.png}
+    \includegraphics[width=0.9\linewidth]{Report/pics/Plant.png}
     \caption{Simulated plant (subsystem in Fig. \ref{fig:WholeSystem})}
     \label{fig:Plant}
 \end{figure}
