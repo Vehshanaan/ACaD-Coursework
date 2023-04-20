@@ -167,13 +167,14 @@ Which have similar dynamic with the theoretical plant provided. The simulated st
 \textbf{Similarity}
 \begin{itemize}
     \item Both methods are used to modify the performance of the system to achieve the desired outcome.
-    \item Both methods are close loop control and using feedback to accomplish the objective of control.
+    \item Both methods are closed loop control and using feedback to accomplish the objective of control.
     \item Both methods using linear controlling techniques like poles placing, etc.
 \end{itemize}
 
 \textbf{Difference}
 \begin{itemize}
-    \item State feedback cannot apply to systems whose states are not observable, while the output feedback requires the output only.
+    \item State feedback cannot apply to systems whose models are unknown, while the output feedback requires the output only.
+    \item The core idea is different: output feedback aims to eliminate/minimize errors, but state feedback is about changing the plant characteristics and creating an ideal system which including the plant as a subsystem.
     \item Output feedback is actually a kind of partially state feedback, for output is a combination of the states. But not all states could be found in output, so the freedom and performance of output feedback is lesser than state feedback.
     \item Output feedback is more suitable for systems that are uncertain and have disturbance.
     \item State feedback is more suitable for systems that are fully examined and have less disturbance.
@@ -192,7 +193,7 @@ Analyse the plant performance such stability, observability, controllability, an
 \begin{itemize}
     \item \textbf{Stability:}
     Poles of the plant are: $-0.3000\pm1.9774i$, both of them are on the left-half of the s-plane, which means that the system is stable.
-    \item \textbf{Observability and controllability:} For linear time-invariant systems, controllability and observability are equivalent in continuous time. The following verification is using the observable realisation:
+    \item \textbf{Observability and controllability:} For linear time-invariant systems, controllability and observability are equivalent in continuous time\cite{ControlandObserve}. The following verification is using the observable realisation\cite{CourseMaterial}:
 
     \begin{equation}
         \begin{cases}
@@ -222,24 +223,56 @@ Analyse the plant performance such stability, observability, controllability, an
         1&-0.6\end{array}\right]$. It's controllable ($rank(P)=2=n, rank(Q)=1=l$) and observable ($rank(R)=2=n$).
 
     
-    \item \textbf{Unit step response:} The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
+    \item \textbf{Unit step response:} 
+    \\The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
+    \vspace{0.3cm}
+    \\The mathematical analysis of the unit step response:
+    \\When the initial state $x(t_0)=0$, the state transition matrix could be simplified to\cite{CourseMaterial}:
+    \begin{equation}
+        \phi(t,0)=e^{At}=L^{-1}[(sI-A)^{-1}]=L^{-1}
+        \left[\begin{array}{ccc}\frac{5s+3}{5s^2+3s+20}&\frac{-20}{5s^2+3s+20}\\
+        \frac{5}{5s^2+3s+20}&\frac{5s}{5s^2+3s+20}\end{array}\right]
+    \end{equation}
+    And the forced state response could be simplified to:
+    \begin{equation}
+    \begin{aligned}
+        x(t)&=\int_{t_0}^t\phi(t-\tau)Bu(\tau)d\tau+Du(t)\\
+        & \approx
+        \left[
+        \begin{array}{cc}
+        0.4830e^{(-0.3t)}sin(1.9774t)-0.15e^{(-0.3t)}cos(1.9774t)+0.15  \\
+             0.25-0.0126e^{-0.3t}(19.7737cos(1.9774t)+3sin(1.9774t)) 
+        \end{array}
+        \right]
+    \end{aligned}
+    \end{equation}
+
+    Therefore, the output response could be simplified to:
+    \begin{equation}
+    \begin{aligned}
+        y(t)&=Cx(t)+Du(t)\\
+        & \approx
+        0.25 - 0.0126e^{-0.3t}(19.7737cos(1.9774t) + 3.0sin(1.9774t))
+    \end{aligned}
+    \end{equation}
+    
 
 
         \begin{figure}[htbp]
           \centering
-          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
+          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse2.png}}
           \quad % or \hfill
-          \subfigure[Simulated step response in MATLAB.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/SimulateStepResponse.png}}
+          \subfigure[Step response calculated with state transition matrix.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantMathsResponse.png}}
           \caption{Simulated step responses.}
         \end{figure}
 
     \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
         \begin{itemize}
-            \item Overshoot: 68.4885\%
-            \item Steady-state error: 0.80372
-            \item Rise time: 0.5 s
-            \item Peak time: 1.43 s
-            \item Settling time: 7.73 s (error $\leq$ 5\%)
+            \item Overshoot: 61.7\%
+            \item Final value: 0.25
+            \item Rise time: 0.588 s
+            \item Peak time: 1.54 s
+            \item Settling time: 9.83 s (error $\leq$ 5\%)
         \end{itemize}
 \end{itemize}
 
@@ -252,13 +285,14 @@ Design a state feedback controller (you specify the reasonable design criteria).
 \end{quote}
 \textbf{Answer:}
 
- \textbf{Damping ratio $\xi$ :} Choose the optimal damping ratio $\xi=0.707$. This optimal damping ratio can minimize the cumulative error and its rate of change\cite{optimal_damping_ratio}, but it will cause overshoot for it is in the range of underdamping. Some system may doesn't allow any overshoot, but here in this report we assume the system could tolerate overshoot, for there is no actual system provided. To prevent overshoot from happening, just turn up the damping ratio and make the $\xi \ge 1$.
+
+ \textbf{Damping ratio $\xi$ :} Choose the optimal damping ratio $\xi=0.707$\cite{OptimalDampingRatio}. This optimal damping ratio can minimize the cumulative error and its rate of change, but it will cause overshoot for it is in the range of underdamping. Some system may doesn't allow any overshoot, but here in this report we assume the system could tolerate overshoot, for there is no actual system provided. To prevent overshoot from happening, just turn up the damping ratio and make the $\xi \ge 1$.
  
  \textbf{Undamped natural frequency $\omega_n$:} Assuming we need to achieve a settling time (5\% error) of 0.5 seconds, the natural frequency of oscillation would be: $\omega_n = 0.5\times\frac{\xi}{3}=6\sqrt{2}.$
 
  \textbf{Closed loop denominator}: $s^2+2\xi\omega_{n}s+\omega_{n}^2 \rightarrow s^2+12s+72$.
 
-The form of state feedback controller is:
+The form of state feedback controller is\cite{CourseMaterial}:
 
 \begin{equation}
     u(t) = F_{s}x(t)+Hv(t)
@@ -294,7 +328,8 @@ Design a corresponding observer and explain when it will be used.
 \end{quote}
 \textbf{Answer:}
 
-\textbf{Observer poles specification:} In general, the response of the state observer should be faster than the original system, but if the response is too fast, it may amplify small error signals. So the poles of the observer should be further to the imagine axis than the plant.
+
+\textbf{Observer poles specification:} In general, the response of the state observer should be 2 $\sim$ 5 times faster than the original system\cite{CourseMaterial}, but if the response is too fast, it may amplify small error signals. So the poles of the observer should be further to the imagine axis than the plant.
 
 According to the plant's poles ($s = -0.3000\pm1.9774i$) previously mentioned in Section \ref{section:plant analyse}, the poles of the observer could be: $s=-1.2, s=-1.3$, which means the characteristic equation for the observer would be: $(s+1.2)(s+1.3)=s^2+2.5s+1.56$.
 
@@ -318,8 +353,9 @@ and:
 For the implementation with state observer, please see Section \ref{Performance Simulation}.
 
 \textbf{Applications or situations of use:}
-Generally speaking, state observer is a technique of computing state information with the output.
-When the state cannot be directly measured with sensors (like deformation of the building) the observer could be useful for it could derive the state information with only the output. 
+Generally speaking, state observer is a technique of computing internal state information with the system output \cite{Observer}.
+
+When the state cannot be directly measured (like internal deformation of the building) the observer could be useful for it could derive the state information with only the output. 
 
 \section{Performance Simulation}
 \label{Performance Simulation}
@@ -349,25 +385,43 @@ The system simulated with simulink is as shown below:
           \subfigure[$\hat{x}_1$ from observer and $x_1$ of the plant.\label{fig:Observedx^1}]{\includegraphics[width=0.8\textwidth]{Report/pics/x^1.png}}
           \hfill%\quad % or \hfill
           \subfigure[$\hat{x}_2$ from observer and $x_2$ of the plant.\label{fig:Observedx^2} ]{\includegraphics[width=0.8\textwidth]{Report/pics/x^2.png}}
-          \caption{Simulated observer results. There is no noticeable error in the simulation result of the observer.}
+          \caption{Simulated observer results. There is no noticeable errors.}
         \end{figure}
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
     \includegraphics[width = \linewidth]{Report/pics/OutputResult1.png}
     \caption{System output and input (unit step response).}
     \label{fig:OutputResult1}
 \end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Report/pics/Compare.png}
+    \caption{Comparison of the plant and plant with designed state feedback controller.}
+    \label{fig:my_label}
+\end{figure}
+
+
 \FloatBarrier
 
 \textbf{Metrics in time domain:}
 \begin{itemize}
             \item Overshoot: 4.000\%
-            \item Steady-state error: 0.000
+            \item Final value: 1.000
             \item Rise time: 0.313 s
             \item Peak time: 0.522 s
             \item Settling time: 0.522 s (error $\leq$ 5\%)
-        \end{itemize}
+\end{itemize}
+
+\textbf{Frequency Domain Characteristics:}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\linewidth]{Report/pics/SystemBode.png}
+    \caption{System Bode Diagram.}
+    \label{fig:BodeDiagram}
+\end{figure}
+        
 \section{Digital Controller Implementation}
 \textbf{Question:}
 \begin{quote}
@@ -376,21 +430,22 @@ The system simulated with simulink is as shown below:
 \textbf{Answer:}
 The system primarily requires the following components:
 \begin{itemize}
-    \item \textbf{A/D Converter and D/A Converter:} Convert the system output to digital signal, and convert digital controlling signals to analog values. The choice of A/D, D/A converter model should be mainly based on the actual output range of the system and the required resolution (which is determined by the error requirements).
-    \item \textbf{Sampler/Holder:} 
-    \begin{itemize}
-        \item Type Selecting: generally, a zero-order hold sampler is sufficient because it is not overly sensitive to noise signals.
-        \item Sample Interval: 
-            The sampling rate could be determined by two main factors:
-                \begin{enumerate}
-                    \item the plant's dynamic characteristic: sampling interval must be five or ten times faster than the smallest time constant of the system. \\Poles of the plant are: $s=-0.3000\pm0.19774i$, and the real part of the poles determines the convergence speed of the system. So the time constants are $\frac{1}{0.3000}\approx3.3333$.
-                    \item the performance requirement: sampling interval must be short enough to meet the requirement of performance requirement. A slow sampling rate would result in slow response speed of the digital system, for digital systems are running in steps.
-                \end{enumerate}
-    \end{itemize}
+    \item \textbf{A/D Converter and D/A Converter:} Convert the system output to digital signal, and convert digital controlling signals to analog values. The choice of A/D, D/A converter model should be mainly based on the channel bandwidth, output range of the system, and the required resolution (which is determined by the error requirements).
+    \item \textbf{Sampler/Holder:} Generally, a zero-order hold sampler is sufficient because it is not overly sensitive to noise signals. 
     
-    \item \textbf{Logic Circuits:} The operations of the control system designed in this report can be performed using simple digital circuits, and in some designs, the logic may be implemented by a micro-controller. The selection of devices in this section should be based on budget considerations and performance requirements.
+    The sampling rate could be determined by the plant's dynamic characteristic: sampling interval must be five or ten times faster than the smallest time constant of the system.\cite{CourseMaterial}
 
-    In the given system, $x_2=y$, so the observer in continuous domain could be simplified as below:
+    To determine the time constant, we need to investigate the closed loop poles. A complex pole $\sigma\pm\j\omega$ represents a signal with the form of $Ae^{-\sigma t}sin(\omega t+\phi)$ in time domain. Which means the real part of the pole determines the decaying speed, and the imagine part determines the oscillation frequency.
+    
+    Poles of the plant are: $s=-0.3000\pm0.19774i$, and the real part of the poles determines the decaying speed of the system. So both of the time constants are $\frac{1}{0.3000}\approx3.3333$.
+
+    And for sampling interval $T$: $T$ could be selected in the interval of $(0.2\sim0.1)*3.3333$, the faster the better. But the sampling rate is also limited by the other factors from other parts of the system like channel bandwidth, processing speed, power supply, and budget.
+
+    Another factor that affects the sampling rate is the desired performance. Slow sampling rate could result in slow responding, deteriorated overshoot and oscillation, etc.
+    
+    \item \textbf{Logic Circuits:} The operations of the control system designed in this report can be implemented with only basic digital circuit components (op-amp, capacitor, resister, inductance, etc), and in many occasions, these computing may be performed by a micro-controller. The selection of devices in this section should be based on budget considerations.
+
+    In the given system, $x_2=y$ (see Section \ref{section:plant analyse}), so the observer in continuous domain could be simplified as below:
     \begin{equation}
         \begin{cases}
             \hat{\dot{x}}_1 = u-4y\\
@@ -401,7 +456,7 @@ The system primarily requires the following components:
     \begin{equation}
         u(t) = F_s\hat{x}(t)+Hv(t) = -11.4 \hat{x}_1-61.16 \hat{x}_2+72v
     \end{equation}
-    Then, the implementation could be:
+    Then, the computing process is:
     \begin{enumerate}
         \item $\hat{\dot{x}}_1$: $\hat{\dot{x}}_1 = u-4y$. 
         \item $\hat{x}_1$: Perform integration  in discrete domain to get $\hat{x}_1$: $\hat{x}_1(t) = \hat{x}_1(t-1)+T*\hat{\dot{x}}_1(t-1)$. $T$ is the sampling interval.
@@ -421,10 +476,10 @@ The system primarily requires the following components:
 \FloatBarrier
 
 \patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
 \section{References}
 
 \bibliographystyle{unsrt}
 \bibliography{Report/ref}
-
 
 \end{document}
