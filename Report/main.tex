@@ -224,7 +224,39 @@ Analyse the plant performance such stability, observability, controllability, an
         1&-0.6\end{array}\right]$. It's controllable ($rank(P)=2=n, rank(Q)=1=l$) and observable ($rank(R)=2=n$).
 
     
-    \item \textbf{Unit step response:} The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
+    \item \textbf{Unit step response:} 
+    \\The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
+    \vspace{0.3cm}
+    \\The mathematical analysis of the unit step response:
+    \\When the initial state$x(t_0)=0$, the state transition matrix could be simplified to:
+    \begin{equation}
+        \phi(t,0)=e^{At}=L^{-1}[(sI-A)^{-1}]=L^{-1}
+        \left[\begin{array}{ccc}\frac{5s+3}{5s^2+3s+20}&\frac{-20}{5s^2+3s+20}\\
+        \frac{5}{5s^2+3s+20}&\frac{5s}{5s^2+3s+20}\end{array}\right]
+    \end{equation}
+    And the forced state response could be simplified to:
+    \begin{equation}
+    \begin{aligned}
+        x(t)&=\int_{t_0}^t\phi(t-\tau)Bu(\tau)d\tau+Du(t)\\
+        & \approx
+        \left[
+        \begin{array}{cc}
+        0.4830e^{(-0.3t)}sin(1.9774t)-0.15e^{(-0.3t)}cos(1.9774t)+0.15  \\
+             0.25-0.0126e^{-0.3t}(19.7737cos(1.9774t)+3sin(1.9774t)) 
+        \end{array}
+        \right]
+    \end{aligned}
+    \end{equation}
+
+    Therefore, the output response could be simplified to:
+    \begin{equation}
+    \begin{aligned}
+        y(t)&=Cx(t)+Du(t)\\
+        & \approx
+        0.25 - 0.0126e^{-0.3t}(19.7737*cos(1.9774t) + 3.0sin(1.9774t))
+    \end{aligned}
+    \end{equation}
+    
 
 
         \begin{figure}[htbp]
@@ -241,7 +273,7 @@ Analyse the plant performance such stability, observability, controllability, an
             \item Final value: 0.25
             \item Rise time: 0.588 s
             \item Peak time: 1.54 s
-            \item Transient time: 12.29 s
+            \item Transient time: 12.9 s
         \end{itemize}
 \end{itemize}
 
