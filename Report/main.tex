@@ -410,7 +410,16 @@ The system simulated with simulink is as shown below:
             \item Rise time: 0.313 s
             \item Peak time: 0.522 s
             \item Settling time: 0.522 s (error $\leq$ 5\%)
-        \end{itemize}
+\end{itemize}
+
+\textbf{Frequency Domain Characteristics:}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\linewidth]{Report/pics/SystemBode.png}
+    \caption{System Bode Diagram.}
+    \label{fig:BodeDiagram}
+\end{figure}
+        
 \section{Digital Controller Implementation}
 \textbf{Question:}
 \begin{quote}
@@ -419,18 +428,22 @@ The system simulated with simulink is as shown below:
 \textbf{Answer:}
 The system primarily requires the following components:
 \begin{itemize}
-    \item \textbf{A/D Converter and D/A Converter:} Convert the system output to digital signal, and convert digital controlling signals to analog values. The choice of A/D, D/A converter model should be mainly based on the actual output range of the system and the required resolution (which is determined by the error requirements).
+    \item \textbf{A/D Converter and D/A Converter:} Convert the system output to digital signal, and convert digital controlling signals to analog values. The choice of A/D, D/A converter model should be mainly based on the channel bandwidth, output range of the system, and the required resolution (which is determined by the error requirements).
     \item \textbf{Sampler/Holder:} Generally, a zero-order hold sampler is sufficient because it is not overly sensitive to noise signals. 
     
-    The sampling rate could be determined by the plant's dynamic characteristic: sampling interval must be five or ten times faster than the smallest time constant of the system.
-    
-    Poles of the plant are: $s=-0.3000\pm0.19774i$, and the real part of the poles determines the convergence speed of the system. So the time constants are $\frac{1}{0.3000}\approx3.3333$.
+    The sampling rate could be determined by the plant's dynamic characteristic: sampling interval must be five or ten times faster than the smallest time constant of the system.\cite{CourseMaterial}
 
-    And for sampling interval $T$: $T$ could be selected in the interval of $(0.2\sim0.1)*3.3333$, the faster the better. But the sampling rate is also limited by the other factors from other parts of the system like channel bandwidth, processing speed, power supply, and budget. In this report I will take the middle of the interval as the sampling interval, which is $0.15*3.3333 = 0.5 s$.
+    To determine the time constant, we need to investigate the closed loop poles. A complex pole $\sigma\pm\j\omega$ represents a signal with the form of $Ae^{-\sigma t}sin(\omega t+\phi)$ in time domain. Which means the real part of the pole determines the decaying speed, and the imagine part determines the oscillation frequency.
     
-    \item \textbf{Logic Circuits:} The operations of the control system designed in this report can be performed using simple digital circuits, and in some designs, they may be performed by a microcontroller. The selection of devices in this section should be based on budget considerations.
+    Poles of the plant are: $s=-0.3000\pm0.19774i$, and the real part of the poles determines the decaying speed of the system. So both of the time constants are $\frac{1}{0.3000}\approx3.3333$.
 
-    In the given system, $x_2=y$, so the observer in continuous domain could be simplified as below:
+    And for sampling interval $T$: $T$ could be selected in the interval of $(0.2\sim0.1)*3.3333$, the faster the better. But the sampling rate is also limited by the other factors from other parts of the system like channel bandwidth, processing speed, power supply, and budget.
+
+    Another factor that affects the sampling rate is the desired performance. Slow sampling rate could result in slow responding, deteriorated overshoot and oscillation, etc.
+    
+    \item \textbf{Logic Circuits:} The operations of the control system designed in this report can be implemented with only basic digital circuit components (op-amp, capacitor, resister, inductance, etc), and in many occasions, these computing may be performed by a micro-controller. The selection of devices in this section should be based on budget considerations.
+
+    In the given system, $x_2=y$ (see Section \ref{section:plant analyse}), so the observer in continuous domain could be simplified as below:
     \begin{equation}
         \begin{cases}
             \hat{\dot{x}}_1 = u-4y\\
@@ -441,7 +454,7 @@ The system primarily requires the following components:
     \begin{equation}
         u(t) = F_s\hat{x}(t)+Hv(t) = -11.4 \hat{x}_1-61.16 \hat{x}_2+72v
     \end{equation}
-    Then, the implementation could be:
+    Then, the computing process is:
     \begin{enumerate}
         \item $\hat{\dot{x}}_1$: $\hat{\dot{x}}_1 = u-4y$. 
         \item $\hat{x}_1$: Perform integration  in discrete domain to get $\hat{x}_1$: $\hat{x}_1(t) = \hat{x}_1(t-1)+T*\hat{\dot{x}}_1(t-1)$. $T$ is the sampling interval.
