@@ -228,7 +228,7 @@ Analyse the plant performance such stability, observability, controllability, an
     \\The unit step response in time domain is as shown in Fig. \ref{fig:PlantStepResponse}. This plant has a slow response speed and steady-state error.
     \vspace{0.3cm}
     \\The mathematical analysis of the unit step response:
-    \\When the initial state$x(t_0)=0$, the state transition matrix could be simplified to:
+    \\When the initial state $x(t_0)=0$, the state transition matrix could be simplified to:
     \begin{equation}
         \phi(t,0)=e^{At}=L^{-1}[(sI-A)^{-1}]=L^{-1}
         \left[\begin{array}{ccc}\frac{5s+3}{5s^2+3s+20}&\frac{-20}{5s^2+3s+20}\\
@@ -253,7 +253,7 @@ Analyse the plant performance such stability, observability, controllability, an
     \begin{aligned}
         y(t)&=Cx(t)+Du(t)\\
         & \approx
-        0.25 - 0.0126e^{-0.3t}(19.7737*cos(1.9774t) + 3.0sin(1.9774t))
+        0.25 - 0.0126e^{-0.3t}(19.7737cos(1.9774t) + 3.0sin(1.9774t))
     \end{aligned}
     \end{equation}
     
@@ -261,7 +261,7 @@ Analyse the plant performance such stability, observability, controllability, an
 
         \begin{figure}[htbp]
           \centering
-          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse.png}}
+          \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse2.png}}
           \quad % or \hfill
           \subfigure[Step response calculated with state transition matrix.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantMathsResponse.png}}
           \caption{Simulated step responses.}
@@ -392,6 +392,8 @@ The system simulated with simulink is as shown below:
     \caption{System output and input (unit step response).}
     \label{fig:OutputResult1}
 \end{figure}
+
+
 \FloatBarrier
 
 \textbf{Metrics in time domain:}
