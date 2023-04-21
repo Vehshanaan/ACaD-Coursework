@@ -111,7 +111,7 @@ Theoretical transfer function of the plant:
   \begin{minipage}[t]{0.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{Report/pics/RLCStepResponse.png}
-    \caption{Simulated step response of voltage across capacitor C1. }
+    \caption{Simulated step response of voltage across capacitor C1. The final value is 1 because the closed loop gain is 4, which is different to the provided system. }
     \label{fig:Uc step response}
   \end{minipage}
 \end{figure}
@@ -255,6 +255,7 @@ Analyse the plant performance such stability, observability, controllability, an
         0.25 - 0.0126e^{-0.3t}(19.7737cos(1.9774t) + 3.0sin(1.9774t))
     \end{aligned}
     \end{equation}
+    This means the output have a final state of 0.25 and a transient response of $- 0.0126e^{-0.3t}(19.7737cos(1.9774t) + 3.0sin(1.9774t))$
     
 
 
@@ -263,7 +264,7 @@ Analyse the plant performance such stability, observability, controllability, an
           \subfigure[Simulated step response in Simulink.\label{fig:PlantStepResponse}]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantStepResponse2.png}}
           \quad % or \hfill
           \subfigure[Step response calculated with state transition matrix.\label{fig:SimulatedStepResponse} ]{\includegraphics[width=0.45\textwidth]{Report/pics/PlantMathsResponse.png}}
-          \caption{Simulated step responses.}
+          \caption{Simulated step responses. The simulated results verified my computation result, they showed the same final state and transient response.}
         \end{figure}
 
     \item \textbf{Other Metrics:}  Other common metrics for second order system performance evaluation:
@@ -382,16 +383,16 @@ The system simulated with simulink is as shown below:
 
         \begin{figure}[htbp]
           \centering
-          \subfigure[$\hat{x}_1$ from observer and $x_1$ of the plant.\label{fig:Observedx^1}]{\includegraphics[width=0.8\textwidth]{Report/pics/x^1.png}}
+          \subfigure[$\hat{x}_1$ from observer and $x_1$ of the plant. The state turned to stable as the output turned to stable, because the output is consisted of system states. From Fig.\ref{fig:Plant} we could tell that $x_1$ is the integral result of $u-4y$, this explained why it has an peak at the beginning ($u>4y$), why it dropped ($u<4y$) and why it remained stable ($u=4y$). The number $4$ here could also be deduced from the plant step response in Fig. \ref{fig:PlantStepResponse}, the plant's final value is 0.25, which means it needs an input of 4 to make the output's final value to reach 1. \label{fig:Observedx^1}]{\includegraphics[width=0.8\textwidth]{Report/pics/x^1.png}}
           \hfill%\quad % or \hfill
-          \subfigure[$\hat{x}_2$ from observer and $x_2$ of the plant.\label{fig:Observedx^2} ]{\includegraphics[width=0.8\textwidth]{Report/pics/x^2.png}}
+          \subfigure[$\hat{x}_2$ from observer and $x_2$ of the plant. In the provided system implementation, $x_2 = y$, which means this estimated result should be equal to the output.\label{fig:Observedx^2} ]{\includegraphics[width=0.8\textwidth]{Report/pics/x^2.png}}
           \caption{Simulated observer results. There is no noticeable errors.}
         \end{figure}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = \linewidth]{Report/pics/OutputResult1.png}
-    \caption{System output and input (unit step response).}
+    \caption{System output (unit step response) and input. It showed fast responding speed and minor overshoot.}
     \label{fig:OutputResult1}
 \end{figure}
 
@@ -413,14 +414,6 @@ The system simulated with simulink is as shown below:
             \item Peak time: 0.522 s
             \item Settling time: 0.522 s (error $\leq$ 5\%)
 \end{itemize}
-
-\textbf{Frequency Domain Characteristics:}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{Report/pics/SystemBode.png}
-    \caption{System Bode Diagram.}
-    \label{fig:BodeDiagram}
-\end{figure}
         
 \section{Digital Controller Implementation}
 \textbf{Question:}
